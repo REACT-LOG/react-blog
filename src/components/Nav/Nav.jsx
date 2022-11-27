@@ -1,6 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import styles from './Nav.module.css';
+import Home from '../../pages/Home';
+import Join from '../../pages/Join';
+import Login from '../../pages/Login';
+import CreatePost from '../../pages/CreatePost';
 const Home = () => {
   return (
     <>
@@ -9,7 +13,7 @@ const Home = () => {
     </>
   );
 };
-/* 아래 코드를 대신할 파일을 import처리 해주세요. */
+/* 아래 코드를 대신할 파일을 import처리 후 삭제해주세요. */
 const Login = () => {
   return (
     <>
