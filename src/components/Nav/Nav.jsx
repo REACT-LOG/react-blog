@@ -1,18 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import styles from './Nav.module.css';
-import Home from '../../pages/Home';
-import Join from '../../pages/Join';
-import Login from '../../pages/Login';
-import CreatePost from '../../pages/CreatePost';
-const Home = () => {
-  return (
-    <>
-      <h2>Home</h2>
-      Home...
-    </>
-  );
-};
+import Home from '../../pages/Home/Home.jsx';
+import Join from '../../pages/Join/Join.jsx';
+// import Login from '../../pages/Login';
+// import CreatePost from '../../pages/CreatePost';
+// const Home = () => {
+//   return (
+//     <>
+//       <h2>Home</h2>
+//       Home...
+//     </>
+//   );
+// };
 /* 아래 코드를 대신할 파일을 import처리 후 삭제해주세요. */
 const Login = () => {
   return (
@@ -22,14 +22,14 @@ const Login = () => {
     </>
   );
 };
-const Join = () => {
-  return (
-    <>
-      <h2>Join</h2>
-      Join...
-    </>
-  );
-};
+// const Join = () => {
+//   return (
+//     <>
+//       <h2>Join</h2>
+//       Join...
+//     </>
+//   );
+// };
 const CreatePost = () => {
   return (
     <>
