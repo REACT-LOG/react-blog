@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
-import RouterNav from '../../components/Nav';
+import styles from './Join.module.css';
 
-export default Join = () => {
+const Join = () => {
   const formRef = useRef();
   const nameRef = useRef();
   const emailRef = useRef();
@@ -40,12 +40,18 @@ export default Join = () => {
   };
   return (
     <>
-      <RouterNav></RouterNav>
-      <div className="join__container">
-        <form onSubmit={submitHandler} ref={formRef}>
-          <fieldset>
-            <label htmlFor="name">이름</label>
+      <div className={styles.join__container}>
+        <form
+          className={styles.form__container}
+          onSubmit={submitHandler}
+          ref={formRef}
+        >
+          <fieldset className={styles.fieldset__container}>
+            <label className={styles.label__container} htmlFor="name">
+              이름
+            </label>
             <input
+              className={styles.input__container}
               type="text"
               placeholder="홍길동"
               required
@@ -53,8 +59,13 @@ export default Join = () => {
               id="name"
               name="name"
             />
-            <label htmlFor="email">이메일</label>
+          </fieldset>
+          <fieldset className={styles.fieldset__container}>
+            <label className={styles.label__container} htmlFor="email">
+              이메일
+            </label>
             <input
+              className={styles.input__container}
               type="email"
               placeholder="example@abc.com"
               required
@@ -63,9 +74,12 @@ export default Join = () => {
               name="email"
             />
           </fieldset>
-          <fieldset>
-            <label htmlFor="password">비밀번호</label>
+          <fieldset className={styles.fieldset__container}>
+            <label className={styles.label__container} htmlFor="password">
+              비밀번호
+            </label>
             <input
+              className={styles.input__container}
               required
               ref={passwordRef}
               id="password"
@@ -74,10 +88,15 @@ export default Join = () => {
               placeholder="비밀번호를 입력해주세요."
             />
           </fieldset>
-
-          <fieldset>
-            <label htmlFor="confirmPassword">비밀번호 확인</label>
+          <fieldset className={styles.fieldset__container}>
+            <label
+              className={styles.label__container}
+              htmlFor="confirmPassword"
+            >
+              비밀번호 확인
+            </label>
             <input
+              className={styles.input__container}
               required
               ref={confirmPasswordRef}
               id="confirmPassword"
@@ -86,9 +105,13 @@ export default Join = () => {
               placeholder="비밀번호를 다시 입력해주세요."
             />
           </fieldset>
-          <RegisterButton type="submit">가입하기</RegisterButton>
+          <button className={styles.button__container} type="submit">
+            가입하기
+          </button>
         </form>
       </div>
     </>
   );
 };
+
+export default Join;
