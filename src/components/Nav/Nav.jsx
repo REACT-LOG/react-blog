@@ -1,10 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-const Nav = () => {
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import styles from './Nav.module.css';
+const Home = () => {
   return (
     <>
-      <h2>Nav</h2>
-      Nav...
+      <h2>Home</h2>
+      Home...
     </>
   );
 };
@@ -35,31 +36,39 @@ const CreatePost = () => {
 function RouterNav() {
   return (
     <>
-      <h1>React Router DOM example</h1>
-      <ul>
-        <li>
-          <a href="/">Nav</a>
-        </li>
-        <li>
-          <a href="/login">Login</a>
-        </li>
-        <li>
-          <a href="/join">Join</a>
-        </li>
-        <li>
-          <a href="/crate-post">CreatePost</a>
-        </li>
-      </ul>
+      {/* Router 태그로 감싸지 않고 사용할 경우 에러 발생.(리액트 라우터
+        v6부터) */}
       <Router>
-        <Routes>
-          <Route path="/" element={<Nav />}></Route>
+        {/* Link 태그를 Router태그 밖에서 사용할 경우 에러 발생.(리액트 라우터
+        v6부터) */}
+        <div className={styles.nav__container}>
+          <h1>React Blog</h1>
+          <ul className={styles.nav__list}>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+            <li>
+              <Link to="/join">Join</Link>
+            </li>
+            <li>
+              <Link to="/crate-post">CreatePost</Link>
+            </li>
+          </ul>
+          <Routes>
+            {/* Route 태그를 Routes태그로 감싸지 않고 사용할 경우 에러 발생.(리액트 라우터
+        v6부터) */}
+            <Route path="/" element={<Home />}></Route>
 
-          <Route path="/login" element={<Login />}></Route>
+            <Route path="/login" element={<Login />}></Route>
 
-          <Route path="/join" element={<Join />}></Route>
+            <Route path="/join" element={<Join />}></Route>
 
-          <Route path="/crate-post" element={<CreatePost />}></Route>
-        </Routes>
+            <Route path="/crate-post" element={<CreatePost />}></Route>
+          </Routes>
+        </div>
       </Router>
     </>
   );

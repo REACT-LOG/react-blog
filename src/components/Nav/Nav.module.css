@@ -1,0 +1,7 @@
+.nav__container {
+  display: flex;
+  border: 2px solid black;
+}
+.nav__list {
+  display: flex;
+}
