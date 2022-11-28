@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import styles from './Join.module.css';
+import Login from '../../pages/Login/Login.jsx';
 
 const Join = () => {
   const formRef = useRef();
@@ -33,7 +34,7 @@ const Join = () => {
     alert('회원 가입이 완료되었습니다.');
   };
 
-  //
+  // localstorage에 Data set
   function setArrayInLocalstorage(key, formData) {
     const value = JSON.stringify(formData);
     var str = localStorage.getItem(key);
@@ -118,7 +119,7 @@ const Join = () => {
             />
           </fieldset>
           <button className={styles.button__container} type="submit">
-            가입하기
+            <Link to="/login">가입하기</Link>
           </button>
         </form>
       </div>
