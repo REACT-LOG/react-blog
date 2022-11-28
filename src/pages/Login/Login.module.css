@@ -1,4 +1,4 @@
-.join__container {
+.login__container {
   width: 100vw;
   height: 100vh;
   padding: 50px 0;
@@ -22,7 +22,7 @@
   justify-content: center;
   align-items: center;
   width: 80%;
-  height: 50%;
+  height: 15%;
   border: none;
   margin-bottom: 20px;
 }
@@ -35,12 +35,12 @@
   font-size: 18px;
   display: flex;
   align-items: center;
-  width: 200px;
+  width: 100px;
   height: 50px;
 }
 .button__container {
   width: 150px;
-  height: 100px;
+  height: 70px;
   font-size: 20px;
   font-weight: bold;
   background-color: rgb(189, 243, 247);
@@ -67,5 +67,10 @@
   .fieldset__container {
     flex-direction: column;
     align-items: flex-start;
+  }
+  .button__container {
+    width: 100px;
+    height: 50px;
+    font-size: 18px;
   }
 }

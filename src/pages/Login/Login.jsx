@@ -1,13 +1,11 @@
 import React, { useRef } from 'react';
 import styles from './Login.module.css';
-import Home from '../../pages/Home/Home.jsx';
-import { Link } from 'react-router-dom';
-
-const Join = () => {
+import store from '../../utils/store';
+const Login = () => {
   const formRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
-
+  const key = 'member';
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -20,33 +18,38 @@ const Join = () => {
 
     const formData = { email, password };
     //회원정보 객체를 json데이터로 변환하여 로컬스토리지에 저장
-    setArrayInLocalstorage('member', formData);
-
-    //form 입력칸 초기화
-    formRef.current.reset();
-    alert('로그인 되었습니다.');
+    const result = getArrayInLocalstorage(key, formData);
+    // 반환된 배열에 true 포함되었는지 확인하는 변수
+    const loginResult = result.includes(true);
+    if (loginResult) {
+      //form 입력칸 초기화
+      formRef.current.reset();
+      alert('로그인 되었습니다.');
+      window.location.replace('/');
+    } else {
+      alert('아이디, 비밀번호를 확인해주세요.');
+    }
   };
 
-  // localstorage에 Data set
-  function setArrayInLocalstorage(key, formData) {
-    const value = JSON.stringify(formData);
-    var str = localStorage.getItem(key);
-    var obj = {};
-    try {
-      obj = JSON.parse(str);
-    } catch {
-      obj = {};
-    }
-    if (!obj) {
-      obj = {};
-      obj[key] = [];
-    }
-    obj[key].push(value);
-    localStorage.setItem(key, JSON.stringify(obj));
+  // localstorage에서 Data get
+  function getArrayInLocalstorage(key, formData) {
+    const localStorageData = store.getData(key);
+    const array = localStorageData.member;
+    // Localstorage의 email, password 값과 일치해야만 ture값 반환 --> 배열로 정의, 리턴
+    const validate = array.map((data) => {
+      let parsedData = JSON.parse(data);
+      if (
+        parsedData.email === formData.email &&
+        parsedData.password === formData.password
+      ) {
+        return true;
+      }
+    });
+    return validate;
   }
   return (
     <>
-      <div className={styles.join__container}>
+      <div className={styles.login__container}>
         <form
           className={styles.form__container}
           onSubmit={submitHandler}
@@ -81,7 +84,7 @@ const Join = () => {
             />
           </fieldset>
           <button className={styles.button__container} type="submit">
-            <Link to="/home">로그인</Link>
+            로그인
           </button>
         </form>
       </div>
@@ -89,4 +92,4 @@ const Join = () => {
   );
 };
 
-export default Join;
+export default Login;
