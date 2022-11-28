@@ -68,7 +68,7 @@ function RouterNav() {
               </Link>
             </li>
             <li className={styles.nav__list__item}>
-              <Link className={styles.nav__link} to="/crate-post">
+              <Link className={styles.nav__link} to="/write">
                 CreatePost
               </Link>
             </li>
@@ -84,7 +84,7 @@ function RouterNav() {
 
           <Route path="/join" element={<Join />}></Route>
 
-          <Route path="/crate-post" element={<CreatePost />}></Route>
+          <Route path="/write" element={<CreatePost />}></Route>
         </Routes>
       </Router>
     </>
