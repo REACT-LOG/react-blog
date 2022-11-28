@@ -49,6 +49,10 @@
   border-radius: 10px;
   cursor: pointer;
 }
+.link__container {
+  text-decoration: none;
+  color: rgb(37, 37, 37);
+}
 
 @media (max-width: 1300px) {
   .input__container {
