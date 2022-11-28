@@ -23,21 +23,33 @@ const Join = () => {
       confirmPassword.current.setCustomValidity('비밀번호가 다릅니다.');
       return;
     }
-    const formData = {
-      name,
-      email,
-      password,
-    };
+
+    const formData = { name, email, password };
     //회원정보 객체를 json데이터로 변환하여 로컬스토리지에 저장
-    postLocalStorage(formData);
+    setArrayInLocalstorage('member', formData);
+
     //form 입력칸 초기화
     formRef.current.reset();
     alert('회원 가입이 완료되었습니다.');
   };
-  const postLocalStorage = (formData) => {
-    const jsonFormData = JSON.stringify(formData);
-    localStorage.setItem('member', jsonFormData);
-  };
+
+  //
+  function setArrayInLocalstorage(key, formData) {
+    const value = JSON.stringify(formData);
+    var str = localStorage.getItem(key);
+    var obj = {};
+    try {
+      obj = JSON.parse(str);
+    } catch {
+      obj = {};
+    }
+    if (!obj) {
+      obj = {};
+      obj[key] = [];
+    }
+    obj[key].push(value);
+    localStorage.setItem(key, JSON.stringify(obj));
+  }
   return (
     <>
       <div className={styles.join__container}>
