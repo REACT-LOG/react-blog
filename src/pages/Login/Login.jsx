@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from './Login.module.css';
 import store from '../../utils/store';
 const Login = () => {
@@ -6,6 +6,9 @@ const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const key = 'member';
+  useEffect(() => {
+    emailRef.current.focus();
+  }, []);
   const submitHandler = (e) => {
     e.preventDefault();
 
