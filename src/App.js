@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import RouterNav from './components/Nav/Nav.jsx';
@@ -17,6 +17,13 @@ const Login = () => {
 };
 
 function App() {
+  const editorRef = useRef();
+  const [content, setContent] = useState('');
+
+  const handleSubmit = (e) => {
+    setContent(e);
+  };
+
   return (
     <div className="App">
       <RouterNav />
@@ -29,7 +36,16 @@ function App() {
 
         <Route path="/join" element={<Join />} />
 
-        <Route path="/write" element={<Write />} />
+        <Route
+          path="/write"
+          element={
+            <Write
+              editorRef={editorRef}
+              content={content}
+              onSubmit={handleSubmit}
+            />
+          }
+        />
       </Routes>
     </div>
   );

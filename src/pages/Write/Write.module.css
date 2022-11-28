@@ -4,3 +4,26 @@
   padding-right: 100px;
   height: 800px;
 }
+
+.title {
+  width: 100%;
+  outline: none;
+  border: none;
+  height: 50px;
+  font-size: 25px;
+}
+
+.post {
+  outline: none;
+  border: none;
+  background-color: #bee3ee;
+  border-radius: 10px;
+  width: 200px;
+  height: 40px;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
