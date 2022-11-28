@@ -1,10 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import RouterNav from './components/Nav/Nav.jsx';
 import Home from './pages/Home/Home';
 import Join from './pages/Join/Join';
 import Write from './pages/Write/Write';
+import store from './utils/store';
 
 /* 아래 코드를 대신할 파일을 import처리 후 삭제해주세요. */
 const Login = () => {
@@ -17,12 +18,29 @@ const Login = () => {
 };
 
 function App() {
-  const editorRef = useRef();
-  const [content, setContent] = useState('');
+  const postList = useRef([]);
+  const [posts, setPosts] = useState([]);
 
-  const handleSubmit = (e) => {
-    setContent(e);
+  const handleSubmit = (post) => (e) => {
+    postList.current.push(post);
+    store.setData('posts', postList.current);
+    store.removeStore('current_post');
+    setPosts(postList.current);
+    console.log(posts);
   };
+
+  useEffect(() => {
+    let postData;
+    try {
+      postData = store.getData('posts');
+    } catch (err) {
+      console.log(err);
+    }
+    if (!postData) {
+      store.setData('posts', []);
+    }
+    postList.current = postData;
+  }, []);
 
   return (
     <div className="App">
@@ -36,16 +54,7 @@ function App() {
 
         <Route path="/join" element={<Join />} />
 
-        <Route
-          path="/write"
-          element={
-            <Write
-              editorRef={editorRef}
-              content={content}
-              onSubmit={handleSubmit}
-            />
-          }
-        />
+        <Route path="/write" element={<Write onSubmit={handleSubmit} />} />
       </Routes>
     </div>
   );

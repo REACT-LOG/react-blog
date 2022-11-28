@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
@@ -13,6 +15,7 @@ import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 
 import styles from './Write.module.css';
+import store from '../../utils/store';
 
 const debounce = (cb, delay) => {
   let timer;
@@ -22,31 +25,53 @@ const debounce = (cb, delay) => {
   };
 };
 
-const Write = ({ content, editorRef, onSubmit }) => {
-  const [write, setWrite] = useState('');
-  const [windowSize, setWindowSize] = useState(0);
+const Write = ({ onSubmit }) => {
+  const titleRef = useRef();
+  const editorRef = useRef();
+  const [windowSize, setWindowSize] = useState('vertical');
+  const postTemplate = useRef({
+    id: new Date().getTime(),
+    title: '',
+    content: '',
+    author: '',
+  });
 
-  const handleChange = debounce(() => {
-    const data = editorRef.current?.getInstance().getHTML();
-    setWrite(data);
+  const handleChange = debounce(({ target }) => {
+    const title = titleRef.current.value;
+    const content = editorRef.current?.getInstance().getMarkdown();
+    postTemplate.current.title = title;
+    postTemplate.current.content = content;
+    store.setData('current_post', postTemplate.current);
   }, 600);
 
   const handleResize = () => {
-    setWindowSize(window.innerWidth);
+    window.innerWidth > 1000 ? setWindowSize('vertical') : setWindowSize('tab');
   };
 
   const preventClose = (e) => {
     e.preventDefault();
-    e.returnValue = '';
+    // e.returnValue = false;
   };
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
     window.addEventListener('beforeunload', preventClose);
+    editorRef.current?.getInstance().reset();
+
+    let textContent;
+
+    try {
+      textContent = store.getData('current_post');
+    } catch (e) {}
+    if (textContent) {
+      titleRef.current.value = textContent.title;
+      editorRef.current?.getInstance().setMarkdown(textContent.content, true);
+    }
 
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('beforeunload', preventClose);
+      // store.removeStore('current_post');
     };
   }, []);
 
@@ -56,13 +81,16 @@ const Write = ({ content, editorRef, onSubmit }) => {
       <input
         type="text"
         className={styles.title}
-        placeHolder="제목을 입력 해 주세요"
+        placeholder="제목을 입력 해 주세요"
+        ref={titleRef}
+        name="title"
+        onChange={handleChange}
       />
       <hr />
       <Editor
         initialValue={' '}
         placeholder="내용을 입력해 주세요"
-        previewStyle={windowSize > 1000 ? 'vertical' : 'tab'}
+        previewStyle={windowSize}
         height="calc(100% - 10rem)"
         initialEditType="markdown"
         useCommandShortcut={true}
@@ -78,11 +106,16 @@ const Write = ({ content, editorRef, onSubmit }) => {
         onChange={handleChange}
         // theme="dark"
         ref={editorRef}
+        name="content"
       />
       <div className={styles['btn-container']}>
-        <button className={styles.post} onClick={onSubmit}>
+        <Link
+          className={`${styles.link} ${styles.post}`}
+          onClick={onSubmit(postTemplate.current)}
+          to="/"
+        >
           게시하기
-        </button>
+        </Link>
       </div>
     </div>
   );

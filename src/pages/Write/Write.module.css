@@ -3,6 +3,7 @@
   padding-left: 100px;
   padding-right: 100px;
   height: 800px;
+  padding-bottom: 100px;
 }
 
 .title {
@@ -20,6 +21,22 @@
   border-radius: 10px;
   width: 200px;
   height: 40px;
+  font-weight: bold;
+  transition: background-color 0.4s linear;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.link {
+  text-decoration: none;
+}
+.link:visited {
+  color: black;
+}
+
+.post:hover {
+  background-color: rgba(190, 227, 238, 0.7);
 }
 
 .btn-container {
