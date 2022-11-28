@@ -1,0 +1,26 @@
+body {
+  width: 100vw;
+  height: 100vh;
+}
+.nav__container {
+  width: 100%;
+  padding: 0 20px;
+  display: flex;
+  box-sizing: border-box;
+  background-color: rgb(190, 227, 238);
+  justify-content: space-between;
+  align-items: center;
+  color: rgb(49, 49, 49);
+}
+.nav__list {
+  display: flex;
+  list-style: none;
+}
+.nav__list__item {
+  margin-left: 50px;
+}
+.nav__link {
+  text-decoration: none;
+  color: rgb(87, 87, 87);
+  font-weight: bold;
+}
