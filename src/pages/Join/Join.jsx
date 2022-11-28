@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import styles from './Join.module.css';
-import Login from '../../pages/Login/Login.jsx';
 
 const Join = () => {
   const formRef = useRef();
@@ -8,7 +7,6 @@ const Join = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -32,6 +30,7 @@ const Join = () => {
     //form 입력칸 초기화
     formRef.current.reset();
     alert('회원 가입이 완료되었습니다.');
+    window.location.replace('/login');
   };
 
   // localstorage에 Data set
@@ -118,8 +117,9 @@ const Join = () => {
               placeholder="비밀번호를 다시 입력해주세요."
             />
           </fieldset>
+
           <button className={styles.button__container} type="submit">
-            <Link to="/login">가입하기</Link>
+            가입하기
           </button>
         </form>
       </div>
