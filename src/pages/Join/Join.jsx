@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Join.module.css';
 
 const Join = () => {
