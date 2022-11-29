@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -17,12 +17,10 @@ import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import styles from './Write.module.css';
 import store from '../../utils/store';
 
+let timer;
 const debounce = (cb, delay) => {
-  let timer;
-  return (...rest) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => cb(...rest), delay);
-  };
+  clearTimeout(timer);
+  timer = setTimeout(() => cb(), delay);
 };
 
 const Write = ({ onSubmit }) => {
@@ -36,13 +34,15 @@ const Write = ({ onSubmit }) => {
     author: '',
   });
 
-  const handleChange = debounce(({ target }) => {
+  const handleChange = ({ target }) => {
     const title = titleRef.current.value;
     const content = editorRef.current?.getInstance().getMarkdown();
     postTemplate.current.title = title;
     postTemplate.current.content = content;
-    store.setData('current_post', postTemplate.current);
-  }, 600);
+    debounce(() => {
+      store.setData('current_post', postTemplate.current);
+    }, 600);
+  };
 
   const handleResize = () => {
     window.innerWidth > 1000 ? setWindowSize('vertical') : setWindowSize('tab');
@@ -50,7 +50,7 @@ const Write = ({ onSubmit }) => {
 
   const preventClose = (e) => {
     e.preventDefault();
-    // e.returnValue = false;
+    e.returnValue = false;
   };
 
   useEffect(() => {
@@ -63,7 +63,9 @@ const Write = ({ onSubmit }) => {
     try {
       textContent = store.getData('current_post');
     } catch (e) {}
-    if (textContent) {
+    if (!textContent) {
+      return;
+    } else if (textContent) {
       titleRef.current.value = textContent.title;
       editorRef.current?.getInstance().setMarkdown(textContent.content, true);
     }
@@ -71,7 +73,12 @@ const Write = ({ onSubmit }) => {
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('beforeunload', preventClose);
-      // store.removeStore('current_post');
+      if (document.readyState === 'complete') {
+        console.log('페이지 이동');
+        store.removeStore('current_post');
+      } else if (document.readyState === 'interactive') {
+        console.log('새로고침');
+      }
     };
   }, []);
 
@@ -92,7 +99,7 @@ const Write = ({ onSubmit }) => {
         placeholder="내용을 입력해 주세요"
         previewStyle={windowSize}
         height="calc(100% - 10rem)"
-        initialEditType="markdown"
+        initialEditType="wysiwyg"
         useCommandShortcut={true}
         toolbarItems={[
           // 툴바 옵션 설정

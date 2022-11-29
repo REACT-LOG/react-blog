@@ -26,7 +26,6 @@ function App() {
     store.setData('posts', postList.current);
     store.removeStore('current_post');
     setPosts(postList.current);
-    console.log(posts);
   };
 
   useEffect(() => {
@@ -40,6 +39,7 @@ function App() {
       store.setData('posts', []);
     }
     postList.current = postData;
+    setPosts(postList.current);
   }, []);
 
   return (
@@ -48,7 +48,7 @@ function App() {
       <Routes>
         {/* Route 태그를 Routes태그로 감싸지 않고 사용할 경우 에러 발생.(리액트 라우터
         v6부터) */}
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home posts={posts} />} />
 
         <Route path="/login" element={<Login />} />
 
