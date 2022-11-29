@@ -1,9 +1,9 @@
 import React from 'react';
 import BlogItem from './blogitem/BlogItem';
-import "./BlogList.css"
+import style from "./BlogList.module.css"
 
 const BlogList = ({blogs}) => {
-  return <div className='blogList-Wrap'>
+  return <div className={style.wrap}>
         {blogs.map(blog => <BlogItem blog={blog} key={blog.id}/>)}
   </div>;
 };

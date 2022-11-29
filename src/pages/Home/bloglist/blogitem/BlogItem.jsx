@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import "./blogItem.css"
+import style from "./blogItem.module.css"
 
 const BlogItem = ({blog:{
     id,
@@ -11,22 +11,22 @@ const BlogItem = ({blog:{
     author,
     catecory,
 }}) => {
-  return <div className='blogItem-wrap'>
-    <img className='blogItem-cover' src={img} alt="이미지" />
-    <div className='catecory'>{catecory}</div>
+  return <div className={style.blogItem}>
+    <Link to={`/blog/${id}`}>
+    <img className={style.cover} src={img} alt="이미지" />
+    </Link>
+    <div className={style.cate}>{catecory}</div>
     <h3>{title}</h3>
-    <p className='blogItem-desc'>{description}</p>
+    <p className={style.desc}>{description}</p>
 
     <footer>
-        <div className='blogItem-author'>
+        <div className={style.author}>
             <h6>{author}</h6>
             <p>{createdAt}</p>
         </div>
-        <Link className='blogItem-link' to={`/blog/${id}`}>
-          ➝
-        </Link>
     </footer>
-  </div>;
+    
+    </div>
 };
 
 export default BlogItem;
