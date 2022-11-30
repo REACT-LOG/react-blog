@@ -26,16 +26,21 @@ function RouterNav() {
           </li>
           <li className={styles.nav__list__item}>
             {isLogin ? (
-              <Link
-                className={styles.nav__link}
-                to="/"
-                onClick={() => {
-                  store.removeStore(key);
-                  setIsLogin(false);
-                }}
-              >
-                Logout
-              </Link>
+              <div>
+                <Link
+                  className={styles.nav__logedin__list}
+                  to="/"
+                  onClick={() => {
+                    store.removeStore(key);
+                    setIsLogin(false);
+                  }}
+                >
+                  Logout
+                </Link>
+                <Link className={styles.nav__logedin__list} to="/mypage">
+                  MyPage
+                </Link>
+              </div>
             ) : (
               <Link className={styles.nav__link} to="/login">
                 Login

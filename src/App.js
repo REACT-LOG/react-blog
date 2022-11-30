@@ -6,10 +6,18 @@ import Home from './pages/Home/Home';
 import Join from './pages/Join/Join';
 import Post from './pages/Post/Post';
 import Login from './pages/Login/Login';
+//Mypage 화면 생성 시 아래 코드는 주석해제 해주세요.
+// import Mypage from './pages/Mypage/Mypage';
 import Write from './pages/Write/Write';
 import store from './utils/store';
 
 function App() {
+  //Mypage 화면 생성 시 아래 코드는 삭제해주세요.
+  //-----------------------------------------------------
+  const Mypage = () => {
+    return <div>MyPage입니다.</div>;
+  };
+  //-----------------------------------------------------
   const postList = useRef([]);
   const [posts, setPosts] = useState([]);
 
@@ -43,6 +51,8 @@ function App() {
         <Route path="/" element={<Home posts={posts} />} />
 
         <Route path="/login" element={<Login />} />
+
+        <Route path="/mypage" element={<Mypage />} />
 
         <Route path="/join" element={<Join />} />
 
