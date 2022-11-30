@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import styles from './Join.module.css';
+import store from '../../utils/store';
 import { setArrayInLocalstorage } from '../../utils/localstorageStore';
 const Join = () => {
   const formRef = useRef();
@@ -17,7 +18,7 @@ const Join = () => {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     const confirmPassword = confirmPasswordRef.current.value;
-
+    let id = 1;
     if (name.length === 0 || email.length === 0 || password === 0) {
       return;
     }
@@ -26,14 +27,23 @@ const Join = () => {
       return;
     }
 
-    const formData = { name, email, password };
+    const memberData = store.getData('member');
+    if (memberData) {
+      const getDataArray = memberData.member;
+      console.log(getDataArray);
+      if (getDataArray.length > 0) {
+        id = getDataArray.length + 1;
+      }
+    }
+
+    const formData = { id, name, email, password };
     //회원정보 객체를 json데이터로 변환하여 로컬스토리지에 저장
     setArrayInLocalstorage('member', formData);
 
     //form 입력칸 초기화
     formRef.current.reset();
     alert('회원 가입이 완료되었습니다.');
-    window.location.replace('/login');
+    // window.location.replace('/login');
   };
 
   return (
