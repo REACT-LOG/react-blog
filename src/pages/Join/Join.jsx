@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styles from './Join.module.css';
 
 const Join = () => {
@@ -7,9 +7,9 @@ const Join = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-
-  nameRef.current.focus();
-
+  useEffect(() => {
+    nameRef.current.focus();
+  }, []);
   const submitHandler = (e) => {
     e.preventDefault();
 
