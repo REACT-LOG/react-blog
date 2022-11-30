@@ -34,12 +34,4 @@ function getMemberInLocalstorage(key, formData) {
   return validate;
 }
 
-// localstorage에서 Data remove
-function removeInLocalstorage(key) {
-  localStorage.removeItem(key);
-}
-export {
-  setArrayInLocalstorage,
-  getMemberInLocalstorage,
-  removeInLocalstorage,
-};
+export { setArrayInLocalstorage, getMemberInLocalstorage };
