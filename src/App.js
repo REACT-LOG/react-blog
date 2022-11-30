@@ -4,6 +4,7 @@ import './App.css';
 import RouterNav from './components/Nav/Nav.jsx';
 import Home from './pages/Home/Home';
 import Join from './pages/Join/Join';
+import Post from './pages/Post/Post';
 import Write from './pages/Write/Write';
 import store from './utils/store';
 
@@ -55,6 +56,8 @@ function App() {
         <Route path="/join" element={<Join />} />
 
         <Route path="/write" element={<Write onSubmit={handleSubmit} />} />
+
+        <Route path="/post/:id" element={<Post />} />
       </Routes>
     </div>
   );

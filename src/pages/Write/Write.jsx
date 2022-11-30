@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -48,14 +48,9 @@ const Write = ({ onSubmit }) => {
     window.innerWidth > 1000 ? setWindowSize('vertical') : setWindowSize('tab');
   };
 
-  const preventClose = (e) => {
-    e.preventDefault();
-    e.returnValue = false;
-  };
-
   useEffect(() => {
     window.addEventListener('resize', handleResize);
-    window.addEventListener('beforeunload', preventClose);
+
     editorRef.current?.getInstance().reset();
 
     let textContent;
@@ -72,7 +67,6 @@ const Write = ({ onSubmit }) => {
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('beforeunload', preventClose);
       if (document.readyState === 'complete') {
         console.log('페이지 이동');
         store.removeStore('current_post');
