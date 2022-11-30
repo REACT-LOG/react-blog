@@ -16,10 +16,14 @@ body {
   display: flex;
   list-style: none;
 }
-.nav__list__item {
+.nav__link {
+  text-decoration: none;
+  color: rgb(87, 87, 87);
+  font-weight: bold;
   margin-left: 50px;
 }
-.nav__link {
+.nav__logedin__list {
+  margin-left: 50px;
   text-decoration: none;
   color: rgb(87, 87, 87);
   font-weight: bold;
