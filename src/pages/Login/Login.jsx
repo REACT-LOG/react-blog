@@ -36,23 +36,6 @@ const Login = () => {
       alert('아이디, 비밀번호를 확인해주세요.');
     }
   };
-
-  // localstorage에서 Data get
-  // function getArrayInLocalstorage(key, formData) {
-  //   const localStorageData = store.getData(key);
-  //   const array = localStorageData.member;
-  //   // Localstorage의 email, password 값과 일치해야만 ture값 반환 --> 배열로 정의, 리턴
-  //   const validate = array.map((data) => {
-  //     let parsedData = JSON.parse(data);
-  //     if (
-  //       parsedData.email === formData.email &&
-  //       parsedData.password === formData.password
-  //     ) {
-  //       return true;
-  //     }
-  //   });
-  //   return validate;
-  // }
   return (
     <>
       <div className={styles.login__container}>
