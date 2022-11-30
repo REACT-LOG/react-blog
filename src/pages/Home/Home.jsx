@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import BlogList from './bloglist/BlogList';
-import { data } from './config/data';
 
-const Home = () => {
-  const [blog, setBlog] = useState(data);
+const Home = (prop) => {
 
   return (
     <div>
-      <BlogList blogs={blog} />
+      <BlogList posts={prop.posts} />
     </div>
   );
 };
