@@ -6,7 +6,6 @@ const Home = () => {
   const [blog, setBlog] = useState(data);
 
   return <div>
-    <h1>Blog</h1>
     <BlogList blogs={blog}/>
   </div>;
 };
