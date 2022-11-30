@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import styles from './Join.module.css';
-
+import { setArrayInLocalstorage } from '../../utils/localstorageStore';
 const Join = () => {
   const formRef = useRef();
   const nameRef = useRef();
@@ -36,23 +36,6 @@ const Join = () => {
     window.location.replace('/login');
   };
 
-  // localstorage에 Data set
-  function setArrayInLocalstorage(key, formData) {
-    const value = JSON.stringify(formData);
-    var str = localStorage.getItem(key);
-    var obj = {};
-    try {
-      obj = JSON.parse(str);
-    } catch {
-      obj = {};
-    }
-    if (!obj) {
-      obj = {};
-      obj[key] = [];
-    }
-    obj[key].push(value);
-    localStorage.setItem(key, JSON.stringify(obj));
-  }
   return (
     <>
       <div className={styles.join__container}>
