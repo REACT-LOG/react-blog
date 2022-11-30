@@ -18,7 +18,7 @@ function setArrayInLocalstorage(key, formData) {
 }
 
 // localstorage에서 Data get
-function getArrayInLocalstorage(key, formData) {
+function getMemberInLocalstorage(key, formData) {
   const localStorageData = store.getData(key);
   const array = localStorageData.member;
   // Localstorage의 email, password 값과 일치해야만 ture값 반환 --> 배열로 정의, 리턴
@@ -34,4 +34,12 @@ function getArrayInLocalstorage(key, formData) {
   return validate;
 }
 
-export { setArrayInLocalstorage, getArrayInLocalstorage };
+// localstorage에서 Data remove
+function removeInLocalstorage(key) {
+  localStorage.removeItem(key);
+}
+export {
+  setArrayInLocalstorage,
+  getMemberInLocalstorage,
+  removeInLocalstorage,
+};
