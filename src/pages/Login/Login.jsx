@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import styles from './Login.module.css';
-import store from '../../utils/store';
+import {
+  setArrayInLocalstorage,
+  getArrayInLocalstorage,
+} from '../../utils/localstorageStore';
 const Login = () => {
   const formRef = useRef();
   const emailRef = useRef();
@@ -35,21 +38,21 @@ const Login = () => {
   };
 
   // localstorage에서 Data get
-  function getArrayInLocalstorage(key, formData) {
-    const localStorageData = store.getData(key);
-    const array = localStorageData.member;
-    // Localstorage의 email, password 값과 일치해야만 ture값 반환 --> 배열로 정의, 리턴
-    const validate = array.map((data) => {
-      let parsedData = JSON.parse(data);
-      if (
-        parsedData.email === formData.email &&
-        parsedData.password === formData.password
-      ) {
-        return true;
-      }
-    });
-    return validate;
-  }
+  // function getArrayInLocalstorage(key, formData) {
+  //   const localStorageData = store.getData(key);
+  //   const array = localStorageData.member;
+  //   // Localstorage의 email, password 값과 일치해야만 ture값 반환 --> 배열로 정의, 리턴
+  //   const validate = array.map((data) => {
+  //     let parsedData = JSON.parse(data);
+  //     if (
+  //       parsedData.email === formData.email &&
+  //       parsedData.password === formData.password
+  //     ) {
+  //       return true;
+  //     }
+  //   });
+  //   return validate;
+  // }
   return (
     <>
       <div className={styles.login__container}>
