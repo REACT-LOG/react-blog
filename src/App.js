@@ -5,18 +5,9 @@ import RouterNav from './components/Nav/Nav.jsx';
 import Home from './pages/Home/Home';
 import Join from './pages/Join/Join';
 import Post from './pages/Post/Post';
+import Login from './pages/Login/Login';
 import Write from './pages/Write/Write';
 import store from './utils/store';
-
-/* 아래 코드를 대신할 파일을 import처리 후 삭제해주세요. */
-const Login = () => {
-  return (
-    <>
-      <h2>Login</h2>
-      Login...
-    </>
-  );
-};
 
 function App() {
   const postList = useRef([]);

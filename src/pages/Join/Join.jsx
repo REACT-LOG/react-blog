@@ -1,15 +1,15 @@
-import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useRef, useEffect } from 'react';
 import styles from './Join.module.css';
-// import Login from '../../pages/Login/Login.jsx';
-
+import { setArrayInLocalstorage } from '../../utils/localstorageStore';
 const Join = () => {
   const formRef = useRef();
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-
+  useEffect(() => {
+    nameRef.current.focus();
+  }, []);
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -33,25 +33,9 @@ const Join = () => {
     //form 입력칸 초기화
     formRef.current.reset();
     alert('회원 가입이 완료되었습니다.');
+    window.location.replace('/login');
   };
 
-  // localstorage에 Data set
-  function setArrayInLocalstorage(key, formData) {
-    const value = JSON.stringify(formData);
-    var str = localStorage.getItem(key);
-    var obj = {};
-    try {
-      obj = JSON.parse(str);
-    } catch {
-      obj = {};
-    }
-    if (!obj) {
-      obj = {};
-      obj[key] = [];
-    }
-    obj[key].push(value);
-    localStorage.setItem(key, JSON.stringify(obj));
-  }
   return (
     <>
       <div className={styles.join__container}>
@@ -119,8 +103,9 @@ const Join = () => {
               placeholder="비밀번호를 다시 입력해주세요."
             />
           </fieldset>
+
           <button className={styles.button__container} type="submit">
-            <Link to="/login">가입하기</Link>
+            가입하기
           </button>
         </form>
       </div>
