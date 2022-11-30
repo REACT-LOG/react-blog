@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -24,6 +24,8 @@ const debounce = (cb, delay) => {
 };
 
 const Write = ({ onSubmit }) => {
+  const navigate = useNavigate();
+
   const titleRef = useRef();
   const editorRef = useRef();
   const [windowSize, setWindowSize] = useState('vertical');
@@ -53,27 +55,38 @@ const Write = ({ onSubmit }) => {
 
     editorRef.current?.getInstance().reset();
 
+    const loginUser = store.getData('logedInUser');
+    if (!loginUser) {
+      navigate('/login', { replace: true });
+    }
+
     let textContent;
 
     try {
       textContent = store.getData('current_post');
-    } catch (e) {}
-    if (!textContent) {
-      return;
-    } else if (textContent) {
-      titleRef.current.value = textContent.title;
-      editorRef.current?.getInstance().setMarkdown(textContent.content, true);
+    } catch (e) {
+      console.log(e);
     }
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      if (document.readyState === 'complete') {
-        console.log('페이지 이동');
-        store.removeStore('current_post');
-      } else if (document.readyState === 'interactive') {
-        console.log('새로고침');
+    if (loginUser) {
+      postTemplate.current.author = loginUser.id;
+      if (!textContent) {
+        return;
+      } else if (textContent) {
+        titleRef.current.value = textContent.title;
+        editorRef.current?.getInstance().setMarkdown(textContent.content, true);
       }
-    };
+
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        if (document.readyState === 'complete') {
+          console.log('페이지 이동');
+          store.removeStore('current_post');
+        } else if (document.readyState === 'interactive') {
+          console.log('새로고침');
+        }
+      };
+    }
   }, []);
 
   return (
