@@ -12,13 +12,12 @@ import Write from './pages/Write/Write';
 import store from './utils/store';
 
 function App() {
-
   const postList = useRef([]);
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
 
   const handleSubmit = (post) => (e) => {
-    postList.current.push(post);
+    postList.current = [post, ...postList.current];
     store.setData('posts', postList.current);
     setPosts([...postList.current]);
     store.removeStore('current_post');
@@ -53,7 +52,6 @@ function App() {
     postList.current = postData;
     setPosts([...postList.current]);
   }, []);
-
 
   return (
     <div className="App">
