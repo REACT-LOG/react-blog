@@ -1,0 +1,24 @@
+.post {
+  outline: none;
+  border: none;
+  background-color: #bee3ee;
+  border-radius: 10px;
+  width: 200px;
+  height: 40px;
+  font-weight: bold;
+  transition: background-color 0.4s linear;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.link {
+  text-decoration: none;
+}
+.link:visited {
+  color: black;
+}
+
+.post:hover {
+  background-color: rgba(190, 227, 238, 0.7);
+}
