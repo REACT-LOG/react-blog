@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
 import RouterNav from './components/Nav/Nav.jsx';
 import Home from './pages/Home/Home';
@@ -12,31 +12,46 @@ import Write from './pages/Write/Write';
 import store from './utils/store';
 
 function App() {
-
   const postList = useRef([]);
   const [posts, setPosts] = useState([]);
+  const navigate = useNavigate();
 
   const handleSubmit = (post) => (e) => {
-    postList.current.push(post);
+    postList.current = [post, ...postList.current];
     store.setData('posts', postList.current);
+    setPosts([...postList.current]);
     store.removeStore('current_post');
-    setPosts(postList.current);
+  };
+
+  const handleRemove = (id) => (e) => {
+    const filtered = posts.filter((post) => post.id !== Number(id));
+    postList.current = filtered;
+    store.setData('posts', postList.current);
+    setPosts(filtered);
+    navigate('/', { replace: true });
+  };
+
+  const handleUpdate = (id, updateData) => (e) => {
+    const updatePost = postList.current.map((post) =>
+      post.id === Number(id) ? { ...updateData } : post,
+    );
+
+    postList.current = updatePost;
+    store.setData('posts', postList.current);
+    setPosts(updatePost);
+    navigate(`/post/${id}`, { replace: true });
   };
 
   useEffect(() => {
-    let postData;
-    try {
-      postData = store.getData('posts');
-    } catch (err) {
-      console.log(err);
-    }
+    const postData = store.getData('posts');
+
     if (!postData) {
       store.setData('posts', []);
     }
-    postList.current = postData;
-    setPosts(postList.current);
-  }, []);
 
+    postList.current = postData;
+    setPosts([...postList.current]);
+  }, []);
 
   return (
     <div className="App">
@@ -52,9 +67,20 @@ function App() {
 
         <Route path="/join" element={<Join />} />
 
-        <Route path="/write" element={<Write onSubmit={handleSubmit} />} />
+        <Route
+          path="/write"
+          element={<Write onSubmit={handleSubmit} onUpdate={handleUpdate} />}
+        >
+          <Route
+            path=":postId"
+            element={<Write onSubmit={handleUpdate} onUpdate={handleUpdate} />}
+          />
+        </Route>
 
-        <Route path="/post/:id" element={<Post />} />
+        <Route
+          path="/post/:id"
+          element={<Post posts={posts} onRemove={handleRemove} />}
+        />
       </Routes>
     </div>
   );
