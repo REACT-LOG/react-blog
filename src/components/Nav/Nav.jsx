@@ -20,6 +20,11 @@ function RouterNav() {
         <h1>React Blog</h1>
         <ul className={styles.nav__list}>
           <li className={styles.nav__list__item}>
+            <Link className={styles.nav__link} to="/post/1669834690027">
+              post
+            </Link>
+          </li>
+          <li className={styles.nav__list__item}>
             <Link className={styles.nav__link} to="/">
               Home
             </Link>

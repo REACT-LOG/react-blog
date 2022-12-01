@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  border-bottom: 1px solid black;
+}
+
+.viewer {
+  border-top: 1px solid black;
+}
+.editor-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* height: 50vh; */
+  width: 60vh;
+
+  margin: 100px auto;
+  padding: 5vh;
+  border: 1px solid black;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+}

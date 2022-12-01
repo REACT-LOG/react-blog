@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import Button from '../../components/Button/Button';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -23,18 +24,21 @@ const debounce = (cb, delay) => {
   timer = setTimeout(() => cb(), delay);
 };
 
-const Write = ({ onSubmit }) => {
+const Write = ({ onSubmit, onUpdate }) => {
+  const { postId } = useParams();
   const navigate = useNavigate();
-
   const titleRef = useRef();
   const editorRef = useRef();
-  const [windowSize, setWindowSize] = useState('vertical');
-  const postTemplate = useRef({
+
+  const postData = store.getData('posts').find((e) => e.id === Number(postId));
+  const initialValue = {
     id: new Date().getTime(),
     title: '',
     content: '',
     author: '',
-  });
+  };
+  const [windowSize, setWindowSize] = useState('vertical');
+  const postTemplate = useRef(initialValue);
 
   const handleChange = ({ target }) => {
     const title = titleRef.current.value;
@@ -56,25 +60,21 @@ const Write = ({ onSubmit }) => {
     editorRef.current?.getInstance().reset();
 
     const loginUser = store.getData('logedInUser');
+
     if (!loginUser) {
       navigate('/login', { replace: true });
     }
 
-    let textContent;
-
-    try {
-      textContent = store.getData('current_post');
-    } catch (e) {
-      console.log(e);
-    }
+    const currentPost = postId ? postData : store.getData('current_post');
 
     if (loginUser) {
       postTemplate.current.author = loginUser.id;
-      if (!textContent) {
+      if (!currentPost) {
         return;
-      } else if (textContent) {
-        titleRef.current.value = textContent.title;
-        editorRef.current?.getInstance().setMarkdown(textContent.content, true);
+      } else if (currentPost) {
+        postId && (postTemplate.current.id = currentPost.id);
+        titleRef.current.value = currentPost.title;
+        editorRef.current?.getInstance().setMarkdown(currentPost.content, true);
       }
 
       return () => {
@@ -87,7 +87,7 @@ const Write = ({ onSubmit }) => {
         }
       };
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <div className={styles.editor}>
@@ -123,13 +123,16 @@ const Write = ({ onSubmit }) => {
         name="content"
       />
       <div className={styles['btn-container']}>
-        <Link
-          className={`${styles.link} ${styles.post}`}
-          onClick={onSubmit(postTemplate.current)}
-          to="/"
+        <Button
+          onClick={
+            postId
+              ? onUpdate(postId, postTemplate.current)
+              : onSubmit(postTemplate.current)
+          }
+          to={postId ? `/post/${postId}` : '/'}
         >
-          게시하기
-        </Link>
+          {postId ? '수정하기' : '게시하기'}
+        </Button>
       </div>
     </div>
   );

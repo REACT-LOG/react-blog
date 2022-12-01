@@ -1,20 +1,4 @@
-.editor {
-  margin-top: 70px;
-  padding-left: 100px;
-  padding-right: 100px;
-  height: 800px;
-  padding-bottom: 100px;
-}
-
-.title {
-  width: 100%;
-  outline: none;
-  border: none;
-  height: 50px;
-  font-size: 25px;
-}
-
-/* .post {
+.post {
   outline: none;
   border: none;
   background-color: #bee3ee;
@@ -37,10 +21,4 @@
 
 .post:hover {
   background-color: rgba(190, 227, 238, 0.7);
-} */
-
-.btn-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
 }
