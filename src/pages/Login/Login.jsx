@@ -21,12 +21,16 @@ const Login = () => {
     }
     let id = 1;
     let formData = { id, email, password };
+    let trueValue = [];
     //회원정보 객체를 json데이터로 변환하여 로컬스토리지에 저장
     //id 추출
     const result = getMemberInLocalstorage(key, formData);
     const trueResult = result.filter((data) => data !== undefined);
-    const trueValue = trueResult[0];
-    id = trueValue[1];
+    //아이디, 비밀번호가 일치하는 경우
+    if (trueResult.length > 0) {
+      trueValue = trueResult[0];
+      id = trueValue[1];
+    }
     formData = { id, email, password };
     // 반환된 배열에 true 포함되었는지 확인하는 변수
     const loginResult = trueValue.includes(true);
