@@ -1,15 +1,11 @@
+
 .blogItem {
     display: flex;
     flex-direction: column;
     width: 300px;
+    text-decoration: none;
   }
-  .cover {
-    width: 300px;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 20px;
-    margin-bottom: 0.5rem;
-  }
+
   .blogItem h3 {
     margin: 0.5rem 0 1rem 0;
     flex: 1;
@@ -21,7 +17,6 @@
     overflow: hidden;
     padding-right: 0.6rem;
     font-size: 0.8rem;
-    color: #a9a9a9;
     width: 320px;
   }
   
@@ -47,15 +42,4 @@
   .author {
     display: flex;
     align-items: center;
-  }
-
-  
-  .author p {
-    font-size: 0.6rem;
-    color: #a9a9a9;
-    font-weight: 600;
-  }
-
-  .cate {
-
   }
