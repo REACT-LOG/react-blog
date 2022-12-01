@@ -38,7 +38,7 @@ const Post = ({ posts, onRemove }) => {
       {isLogin && (
         <div className={styles['btn-container']}>
           <Button to={`/write/${id}`}>수정하기</Button>
-          <Button to={'/'} onClick={onRemove(id)}>
+          <Button to={'/mypage'} onClick={onRemove(id)}>
             삭제하기
           </Button>
         </div>

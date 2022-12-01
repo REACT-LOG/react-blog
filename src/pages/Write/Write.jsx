@@ -36,6 +36,7 @@ const Write = ({ onSubmit, onUpdate }) => {
     title: '',
     content: '',
     author: '',
+    img: [],
   };
   const [windowSize, setWindowSize] = useState('vertical');
   const postTemplate = useRef(initialValue);
@@ -54,11 +55,14 @@ const Write = ({ onSubmit, onUpdate }) => {
     window.innerWidth > 1000 ? setWindowSize('vertical') : setWindowSize('tab');
   };
 
+  const onUploadImage = (blob, cb) => {
+    initialValue.img.push(blob);
+    return false;
+  };
+
   useEffect(() => {
     window.addEventListener('resize', handleResize);
-
     editorRef.current?.getInstance().reset();
-
     const loginUser = store.getData('logedInUser');
 
     if (!loginUser) {
@@ -121,6 +125,9 @@ const Write = ({ onSubmit, onUpdate }) => {
         // theme="dark"
         ref={editorRef}
         name="content"
+        hooks={{
+          addImageBlobHook: onUploadImage,
+        }}
       />
       <div className={styles['btn-container']}>
         <Button

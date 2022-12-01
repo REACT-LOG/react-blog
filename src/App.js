@@ -28,7 +28,8 @@ function App() {
     postList.current = filtered;
     store.setData('posts', postList.current);
     setPosts(filtered);
-    navigate('/', { replace: true });
+    store.removeStore('current_post');
+    // navigate('/', { replace: true });
   };
 
   const handleUpdate = (id, updateData) => (e) => {
